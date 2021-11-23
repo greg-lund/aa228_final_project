@@ -12,4 +12,6 @@ phi = atan2(Tc(3),Tc(2));
 
 u_clamped = mag * [cos(theta);cos(phi)*sin(theta);sin(phi)*sin(theta)] / m + g;
 
+%u(1) = min(max(0,u(1)),Tmax);
+%u_clamped = u + g;
 end

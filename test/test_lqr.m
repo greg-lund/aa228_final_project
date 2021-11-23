@@ -12,17 +12,13 @@ m0 = 2000; % Mass with propelant [kg]
 mf = 300; % Empty mass [kg]
 vmax = 1e4; % Maximum velocity allowed [m/s]
 glide_slope = pi/4; % Bound allowable positions via cone [rad]
+x0 = [10000,0,0,0,0,0]'; % Initial Position
 
-%x0 = [2400,450,-330,-10,-40,10]';
-x0 = [10000,0,0,0,0,0]';
-goal = [0,0,0]';
-
-%[Tc,x] = optimize_thrust(w,g,x0,goal,m0,mf,alpha,rho1,rho2,theta,vmax,glide_slope);
-
+% LQR params
 Q = 2*eye(6);
 R = eye(3);
 
-%% Plot
+%% Simulate
 dt = 1e-2;
 tmax = 100;
 t = 0:dt:tmax;
@@ -40,13 +36,16 @@ P = icare(A,B,Q,R);
 K = inv(R) * B' * P;
 Acl = A - B*K;
 
+% More realistic clamping for controls - maybe not working
 %[xc,uc,mc,tc] = simulate_feedback(w,g,x0,m0,mf,alpha,theta,Tmax,K,dt);
+
+% Unrealistic control clamping
 [xc,uc] = sim_lqr(A,B,K,0,Tmax,t,x0); tc = t;
 
 end_idx = find(xs(1,:) < 0, 1);
 end_idx_c = find(xc(1,:)<0,1);
 
-%%
+%% Plot
 figure
 subplot(1,2,1)
 plot(t(1:end_idx),xs(1:3,1:end_idx)./1000,'linewidth',1.5)

@@ -21,7 +21,7 @@ S = [0,-w(3),w(2); w(3),0,-w(1);-w(2),w(1),0];
 A = [zeros(3,3),eye(3);-S^2,-2*S];
 B = [zeros(3,3);eye(3)];
 
-t = 0; x = x0; u = []; m = m0;
+t = 0; x = x0; u = [0;0;0]; m = m0;
 
 while true
     if m(end) <= mf
@@ -30,7 +30,7 @@ while true
         control = clamp_input(g,theta_max,Tmax,m(end),-K*x(:,end));
     end
     Tc = m(end)*(control-g);
-    new_x = x(:,end)+A*x(:,end)+B*control*dt;
+    new_x = x(:,end)+(A*x(:,end)+B*control)*dt;
     x = [x,new_x];
     m = [m,m(end)-alpha*norm(Tc)*dt];
     t = [t,t(end)+dt];
