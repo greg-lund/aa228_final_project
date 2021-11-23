@@ -1,4 +1,4 @@
-function [x,u,m,t] = simulate_feedback(w,g,x0,m0,mf,alpha,theta,Tmax,K,dt)
+function [x,u,m,t] = simulate_feedback(w,g,x0,m0,mf,alpha,theta_max,Tmax,K,dt)
 %simulate_feedback Simulates the rocket trajectory given feedback gain
 %   matrix K
 %
@@ -8,7 +8,7 @@ function [x,u,m,t] = simulate_feedback(w,g,x0,m0,mf,alpha,theta,Tmax,K,dt)
 %   m0:    initial mass [kg]
 %   mf:    empty mass [kg]
 %   alpha: fuel consumption rate [kg/Ns]
-%   theta: maximum gimbal angle for thruster [rad]
+%   theta_max: maximum gimbal angle for thruster [rad]
 %   Tmax:  maximum thrust [N]
 %   K:     feedback gain matrix (3,6)
 %   dt:    timestep [s]
@@ -24,8 +24,22 @@ B = [zeros(3,3);eye(3)];
 t = 0; x = x0; u = []; m = m0;
 
 while true
-    control = -K*x(:,end);
+    if m(end) <= mf
+        control = g;
+    else
+        control = clamp_input(g,theta_max,Tmax,m(end),-K*x(:,end));
+    end
+    Tc = m(end)*(control-g);
+    new_x = x(:,end)+A*x(:,end)+B*control*dt;
+    x = [x,new_x];
+    m = [m,m(end)-alpha*norm(Tc)*dt];
+    t = [t,t(end)+dt];
+    u = [u,control];
 
+    % Stop if we hit the surface
+    if (x(1,end) <= 0)
+        break
+    end
 end
 
 end

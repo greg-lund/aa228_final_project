@@ -40,17 +40,12 @@ P = icare(A,B,Q,R);
 K = inv(R) * B' * P;
 Acl = A - B*K;
 
-sys = ss(Acl,B,C,0);
-u = zeros(length(t),3);
-%xl = lsim(sys,u,t,x0);
-[xc,uc] = sim_lqr(A,B,K,0,24000,t,x0);
-
+%[xc,uc,mc,tc] = simulate_feedback(w,g,x0,m0,mf,alpha,theta,Tmax,K,dt);
+[xc,uc] = sim_lqr(A,B,K,0,Tmax,t,x0); tc = t;
 
 end_idx = find(xs(1,:) < 0, 1);
-end_idx_c = find(xc(1,:) < 0, 1);
-if length(end_idx_c) == 0
-    end_idx_c = length(t);
-end
+end_idx_c = find(xc(1,:)<0,1);
+
 %%
 figure
 subplot(1,2,1)
@@ -69,19 +64,19 @@ ylabel('Velocity [km/s]')
 
 figure
 subplot(1,2,1)
-plot(t(1:end_idx_c),xc(1:3,1:end_idx_c)./1000,'linewidth',1.5)
+plot(tc(1:end_idx_c),xc(1:3,1:end_idx_c)./1000,'linewidth',1.5);
 legend('X','Y','Z','location','best')
 xlabel('Time [s]')
 ylabel('Position [km]')
 
 subplot(1,2,2)
-plot(t(1:end_idx_c),xc(4:6,1:end_idx_c)./1000,'linewidth',1.5)
+plot(tc(1:end_idx_c),xc(4:6,1:end_idx_c)./1000,'linewidth',1.5);
 legend('$\dot{X}$','$\dot{Y}$','$\dot{Z}$','location','best','interpreter','latex')
 xlabel('Time [s]')
 ylabel('Velocity [km/s]')
 
 figure
-plot(t(1:end_idx_c),uc(:,1:end_idx_c) * m0 ./ 1000,'linewidth',1.5)
+plot(tc(1:end_idx_c),uc(:,1:end_idx_c) * m0 ./ 1000,'linewidth',1.5);
 legend('T_x','T_y','T_z','location','best')
 xlabel('Time [s]')
 ylabel('Thrust [kN]')
