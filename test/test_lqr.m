@@ -37,7 +37,7 @@ K = inv(R) * B' * P;
 Acl = A - B*K;
 
 % More realistic clamping for controls - maybe not working
-%[xc,uc,mc,tc] = simulate_feedback(w,g,x0,m0,mf,alpha,theta,Tmax,K,dt);
+%[xc,uc,mc,tc] = simulate_feedback(w,g,x0,m0,mf,alpha,theta,Tmax,zeros(3,6),dt);
 
 % Unrealistic control clamping
 [xc,uc] = sim_lqr(A,B,K,0,Tmax,t,x0); tc = t;

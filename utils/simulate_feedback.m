@@ -16,7 +16,7 @@ function [x,u,m,t] = simulate_feedback(w,g,x0,m0,mf,alpha,theta_max,Tmax,K,dt)
 % x_dot(t) = A(w) * x(t) + B(g + Tc(t)/m(t))
 % m_dot(t) = -alpha * norm(Tc(t))
 
-
+tol = 1;
 S = [0,-w(3),w(2); w(3),0,-w(1);-w(2),w(1),0];
 A = [zeros(3,3),eye(3);-S^2,-2*S];
 B = [zeros(3,3);eye(3)];
@@ -37,7 +37,7 @@ while true
     u = [u,control];
 
     % Stop if we hit the surface
-    if (x(1,end) <= 0)
+    if (x(1,end) <= tol)
         break
     end
 end

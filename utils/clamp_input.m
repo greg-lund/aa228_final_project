@@ -5,13 +5,9 @@ function [u_clamped] = clamp_input(g,theta_max,Tmax,m,u)
 
 Tc = (u - g)*m;
 mag = min(norm(Tc),Tmax);
+Tc = Tc / norm(Tc) * mag;
 
-theta = acos(Tc(1)/norm(Tc));
-theta = max(min(theta,theta_max),-theta_max);
-phi = atan2(Tc(3),Tc(2));
+Tc(1) = max(mag*cos(theta_max),Tc(1));
 
-u_clamped = mag * [cos(theta);cos(phi)*sin(theta);sin(phi)*sin(theta)] / m + g;
-
-%u(1) = min(max(0,u(1)),Tmax);
-%u_clamped = u + g;
+u_clamped = g + Tc ./ m;
 end

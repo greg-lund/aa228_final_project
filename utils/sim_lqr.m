@@ -9,11 +9,13 @@ x = zeros(6,N);
 x(:,1) = x0;
 u = zeros(3,N);
 for i = 1:(N-1)
-    T = -K*x(:,i);
+    u = -K*x(:,i);
+    mag = min(max_thrust,max(min_thrust,norm(u)));
+    u = u / mag;
     % Clamp x thrust 
-    T(1) = min(max_thrust,max(min_thrust,T(1)));
+    %T(1) = min(max_thrust,max(min_thrust,T(1)));
     % clamp T magnitude
-    u(:,i) = T + g; % Set T in our bounds
+    %u(:,i) = T + g; % Set T in our bounds
     
     dx = A*x(:,i) + B*u(:,i);
     x(:,i+1) = x(:,i) + dx*dt;
