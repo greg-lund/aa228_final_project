@@ -3,7 +3,7 @@ clear all; close all; clc;
 %% Initial Conditions & Problem Specific variables
 
 % latitude (90N to 90S -> +90 to -90 degrees)
-lat = 90;
+lat = 0;
 
 % Initial Thrust vector (N)
 Tc0 = [0; 0; 0];
@@ -53,9 +53,9 @@ function x = propagate_trajectory(x0, m0, Tc0, alpha, lat, tspan, dt)
     w_I = [omega_Earth; 0; 0];
 
     % Update angle of rotation (theta) given latitude
-    if lat >= 90
+    if lat >= 0
         theta = 90 - lat;
-    elseif lat < 90 
+    elseif lat < 0 
         theta = 90 + abs(lat);
     end
     theta = deg2rad(theta);
