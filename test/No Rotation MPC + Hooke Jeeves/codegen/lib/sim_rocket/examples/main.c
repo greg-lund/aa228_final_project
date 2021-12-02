@@ -42,19 +42,21 @@
 
 /* Function Declarations */
 static void argInit_18x1_real_T(double result[18]);
+
 static void argInit_6x1_real_T(double result[6]);
+
 static double argInit_real_T(void);
+
 static void main_sim_rocket(void);
 
 /* Function Definitions */
 static void argInit_18x1_real_T(double result[18])
 {
   int idx0;
-
   /* Loop over the array to initialize each element. */
   for (idx0 = 0; idx0 < 18; idx0++) {
     /* Set the value of the array element.
-       Change this value to the value that the application requires. */
+Change this value to the value that the application requires. */
     result[idx0] = argInit_real_T();
   }
 }
@@ -62,11 +64,10 @@ static void argInit_18x1_real_T(double result[18])
 static void argInit_6x1_real_T(double result[6])
 {
   int idx0;
-
   /* Loop over the array to initialize each element. */
   for (idx0 = 0; idx0 < 6; idx0++) {
     /* Set the value of the array element.
-       Change this value to the value that the application requires. */
+Change this value to the value that the application requires. */
     result[idx0] = argInit_real_T();
   }
 }
@@ -81,31 +82,29 @@ static void main_sim_rocket(void)
   double dv[18];
   double dv1[6];
   double m_rocket_tmp;
-
   /* Initialize function 'sim_rocket' input arguments. */
   /* Initialize function input argument 'K_vec'. */
   /* Initialize function input argument 'x0'. */
   m_rocket_tmp = argInit_real_T();
-
   /* Call the entry-point 'sim_rocket'. */
   argInit_18x1_real_T(dv);
   argInit_6x1_real_T(dv1);
-  m_rocket_tmp = sim_rocket(dv, dv1, m_rocket_tmp, m_rocket_tmp, m_rocket_tmp,
-    m_rocket_tmp, m_rocket_tmp);
+  m_rocket_tmp =
+      sim_rocket(dv, dv1, m_rocket_tmp, m_rocket_tmp, m_rocket_tmp,
+                 m_rocket_tmp, m_rocket_tmp, m_rocket_tmp, m_rocket_tmp);
 }
 
-int main(int argc, const char * const argv[])
+int main(int argc, char **argv)
 {
   (void)argc;
   (void)argv;
-
-  /* The initialize function is being called automatically from your entry-point function. So, a call to initialize is not included here. */
+  /* The initialize function is being called automatically from your entry-point
+   * function. So, a call to initialize is not included here. */
   /* Invoke the entry-point functions.
-     You can call entry-point functions multiple times. */
+You can call entry-point functions multiple times. */
   main_sim_rocket();
-
   /* Terminate the application.
-     You do not need to do this more than one time. */
+You do not need to do this more than one time. */
   sim_rocket_terminate();
   return 0;
 }

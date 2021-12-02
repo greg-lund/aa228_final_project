@@ -4,7 +4,7 @@
 % Computes an optimized K given an initial K by performing Hooke-Jeeves
 % local search optimization
 
-function [K_final, rewards] = hooke_jeeves(K, m_rocket, m_fuel, g, Isp, T_max, x_start)
+function [K_final, rewards] = hooke_jeeves(K, m_rocket, m_fuel, g, Isp, T_max, x_start, omega, lat)
     
     % Hooke-Jeeves hyperparameters
 
@@ -18,8 +18,8 @@ function [K_final, rewards] = hooke_jeeves(K, m_rocket, m_fuel, g, Isp, T_max, x
 
         alpha = 0.01; % Start alpha (step size) at 0.01
         K_curr = reshape(K{i}, [18 1]); % Initialize current best K
-        reward_curr = sim_rocket_mex(K_curr, x_start, m_rocket, m_fuel, g, Isp, T_max); % Initialize current best reward
-        
+        reward_curr = sim_rocket_mex(K_curr, x_start, m_rocket, m_fuel, g, Isp, T_max, omega, lat); % Initialize current best reward
+
         diff = 9999; % Initialize difference between current best reward and previous best reward
         
         % Run Hooke-Jeeves until we've discounted the step size to less
@@ -46,7 +46,7 @@ function [K_final, rewards] = hooke_jeeves(K, m_rocket, m_fuel, g, Isp, T_max, x
                 % figure out how much reward we get. This simulation script
                 % is MEX-ed to cut down on runtime, since it is run many
                 % times.
-                reward = sim_rocket_mex(K_temp, x_start, m_rocket, m_fuel, g, Isp, T_max);
+                reward = sim_rocket_mex(K_temp, x_start, m_rocket, m_fuel, g, Isp, T_max, omega, lat);
 
                 if reward > reward_best
                     reward_best = reward;

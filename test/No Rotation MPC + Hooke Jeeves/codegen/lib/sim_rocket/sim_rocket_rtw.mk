@@ -2,8 +2,8 @@
 ## Makefile generated for component 'sim_rocket'. 
 ## 
 ## Makefile     : sim_rocket_rtw.mk
-## Generated on : Sun Nov 28 20:23:43 2021
-## Final product: ./sim_rocket.a
+## Generated on : Wed Dec 01 17:41:59 2021
+## Final product: ./sim_rocket.lib
 ## Product type : static-library
 ## 
 ###########################################################################
@@ -15,30 +15,34 @@
 # Macro Descriptions:
 # PRODUCT_NAME            Name of the system to build
 # MAKEFILE                Name of this makefile
+# COMPILER_COMMAND_FILE   Compiler command listing model reference header paths
+# CMD_FILE                Command file
 # MODELLIB                Static library target
 
 PRODUCT_NAME              = sim_rocket
 MAKEFILE                  = sim_rocket_rtw.mk
-MATLAB_ROOT               = /Applications/MATLAB_R2020b.app
-MATLAB_BIN                = /Applications/MATLAB_R2020b.app/bin
-MATLAB_ARCH_BIN           = $(MATLAB_BIN)/maci64
-START_DIR                 = /Users/nitinongole/Documents/Stanford/Fall\ 2021/AA\ 228/Final\ Project/1D\ MPC\ +\ Policy\ Search/codegen/lib/sim_rocket
+MATLAB_ROOT               = C:/PROGRA~1/MATLAB/R2021b
+MATLAB_BIN                = C:/PROGRA~1/MATLAB/R2021b/bin
+MATLAB_ARCH_BIN           = $(MATLAB_BIN)/win64
+START_DIR                 = D:/Stanford/AA_228/Final_Project/aa228_final_project/test/No Rotation MPC + Hooke Jeeves
 TGT_FCN_LIB               = ISO_C
 SOLVER_OBJ                = 
 CLASSIC_INTERFACE         = 0
 MODEL_HAS_DYNAMICALLY_LOADED_SFCNS = 
-RELATIVE_PATH_TO_ANCHOR   = .
-C_STANDARD_OPTS           = -fno-common -fexceptions
-CPP_STANDARD_OPTS         = -std=c++11 -fno-common -fexceptions
-MODELLIB                  = sim_rocket.a
+RELATIVE_PATH_TO_ANCHOR   = ../../..
+COMPILER_COMMAND_FILE     = sim_rocket_rtw_comp.rsp
+CMD_FILE                  = sim_rocket_rtw.rsp
+C_STANDARD_OPTS           = -fwrapv
+CPP_STANDARD_OPTS         = -fwrapv
+MODELLIB                  = sim_rocket.lib
 
 ###########################################################################
 ## TOOLCHAIN SPECIFICATIONS
 ###########################################################################
 
-# Toolchain Name:          Clang v3.1 | gmake (64-bit Mac)
-# Supported Version(s):    3.1
-# ToolchainInfo Version:   2020b
+# Toolchain Name:          MinGW64 | gmake (64-bit Windows)
+# Supported Version(s):    6.x
+# ToolchainInfo Version:   2021b
 # Specification Revision:  1.0
 # 
 #-------------------------------------------
@@ -47,39 +51,47 @@ MODELLIB                  = sim_rocket.a
 
 # C_STANDARD_OPTS
 # CPP_STANDARD_OPTS
+# MINGW_ROOT
+# MINGW_C_STANDARD_OPTS
 
 #-----------
 # MACROS
 #-----------
 
-ARCHS             = x86_64
-XCODE_SDK_VER     = $(shell perl $(MATLAB_ROOT)/rtw/c/tools/macsdkver.pl)
-XCODE_SDK         = MacOSX$(XCODE_SDK_VER).sdk
-XCODE_DEVEL_DIR   = $(shell xcode-select -print-path)
-XCODE_SDK_ROOT    = $(XCODE_DEVEL_DIR)/Platforms/MacOSX.platform/Developer/SDKs/$(XCODE_SDK)
+WARN_FLAGS            = -Wall -W -Wwrite-strings -Winline -Wstrict-prototypes -Wnested-externs -Wpointer-arith -Wcast-align
+WARN_FLAGS_MAX        = $(WARN_FLAGS) -Wcast-qual -Wshadow
+CPP_WARN_FLAGS        = -Wall -W -Wwrite-strings -Winline -Wpointer-arith -Wcast-align
+CPP_WARN_FLAGS_MAX    = $(CPP_WARN_FLAGS) -Wcast-qual -Wshadow
+MW_EXTERNLIB_DIR      = $(MATLAB_ROOT)/extern/lib/win64/mingw64
+SHELL                 = %SystemRoot%/system32/cmd.exe
 
 TOOLCHAIN_SRCS = 
 TOOLCHAIN_INCS = 
-TOOLCHAIN_LIBS = 
+TOOLCHAIN_LIBS = -lws2_32
 
 #------------------------
 # BUILD TOOL COMMANDS
 #------------------------
 
-# C Compiler: Clang C Compiler
-CC = xcrun clang
+# C Compiler: GNU C Compiler
+CC_PATH = $(MINGW_ROOT)
+CC = "$(CC_PATH)/gcc"
 
-# Linker: Clang Linker
-LD = xcrun clang++
+# Linker: GNU Linker
+LD_PATH = $(MINGW_ROOT)
+LD = "$(LD_PATH)/g++"
 
-# C++ Compiler: Clang C++ Compiler
-CPP = xcrun clang++
+# C++ Compiler: GNU C++ Compiler
+CPP_PATH = $(MINGW_ROOT)
+CPP = "$(CPP_PATH)/g++"
 
-# C++ Linker: Clang C++ Linker
-CPP_LD = xcrun clang++
+# C++ Linker: GNU C++ Linker
+CPP_LD_PATH = $(MINGW_ROOT)
+CPP_LD = "$(CPP_LD_PATH)/g++"
 
-# Archiver: Clang Archiver
-AR = xcrun ar
+# Archiver: GNU Archiver
+AR_PATH = $(MINGW_ROOT)
+AR = "$(AR_PATH)/ar"
 
 # MEX Tool: MEX Tool
 MEX_PATH = $(MATLAB_ARCH_BIN)
@@ -92,7 +104,7 @@ DOWNLOAD =
 EXECUTE = $(PRODUCT)
 
 # Builder: GMAKE Utility
-MAKE_PATH = %MATLAB%/bin/maci64
+MAKE_PATH = %MATLAB%/bin/win64
 MAKE = "$(MAKE_PATH)/gmake"
 
 
@@ -111,9 +123,9 @@ OUTPUT_FLAG         = -o
 ARDEBUG             =
 STATICLIB_OUTPUT_FLAG =
 MEX_DEBUG           = -g
-RM                  = @rm -f
+RM                  = @del
 ECHO                = @echo
-MV                  = @mv
+MV                  = @move
 RUN                 =
 
 #--------------------------------------
@@ -121,23 +133,23 @@ RUN                 =
 #--------------------------------------
 
 ARFLAGS              = ruvs
-CFLAGS               = -c -isysroot $(XCODE_SDK_ROOT) -arch $(ARCHS) $(C_STANDARD_OPTS) -mmacosx-version-min=10.14 \
-                       -O3
-CPPFLAGS             = -c -isysroot $(XCODE_SDK_ROOT) -arch $(ARCHS) $(CPP_STANDARD_OPTS) -mmacosx-version-min=10.14 \
-                       -O3
-CPP_LDFLAGS          = -arch $(ARCHS) -isysroot $(XCODE_SDK_ROOT) -Wl,-rpath,$(MATLAB_ARCH_BIN) -Wl,-rpath,@executable_path -Wl,-rpath,@executable_path/$(RELATIVE_PATH_TO_ANCHOR) -L"$(MATLAB_ARCH_BIN)"
-CPP_SHAREDLIB_LDFLAGS  = -dynamiclib -install_name @rpath/$(notdir $(PRODUCT)) -isysroot $(XCODE_SDK_ROOT) -L"$(MATLAB_ARCH_BIN)" \
-                         -Wl,$(LD_NAMESPACE) $(LD_UNDEFS)
+CFLAGS               = -c $(MINGW_C_STANDARD_OPTS) -m64 \
+                       -O3 -fno-loop-optimize -fno-aggressive-loop-optimizations
+CPPFLAGS             = -c $(CPP_STANDARD_OPTS) -m64 \
+                       -O3 -fno-loop-optimize -fno-aggressive-loop-optimizations
+CPP_LDFLAGS          =  -static -m64
+CPP_SHAREDLIB_LDFLAGS  = -shared -Wl,--no-undefined \
+                         -Wl,--out-implib,$(basename $(PRODUCT)).lib
 DOWNLOAD_FLAGS       =
 EXECUTE_FLAGS        =
-LDFLAGS              = -arch $(ARCHS) -isysroot $(XCODE_SDK_ROOT) -Wl,-rpath,$(MATLAB_ARCH_BIN) -Wl,-rpath,@executable_path -Wl,-rpath,@executable_path/$(RELATIVE_PATH_TO_ANCHOR) -L"$(MATLAB_ARCH_BIN)"
+LDFLAGS              =  -static -m64
 MEX_CPPFLAGS         =
 MEX_CPPLDFLAGS       =
 MEX_CFLAGS           =
 MEX_LDFLAGS          =
 MAKE_FLAGS           = -f $(MAKEFILE)
-SHAREDLIB_LDFLAGS    = -dynamiclib -install_name @rpath/$(notdir $(PRODUCT)) -isysroot $(XCODE_SDK_ROOT) -L"$(MATLAB_ARCH_BIN)" \
-                       -Wl,$(LD_NAMESPACE) $(LD_UNDEFS)
+SHAREDLIB_LDFLAGS    = -shared -Wl,--no-undefined \
+                       -Wl,--out-implib,$(basename $(PRODUCT)).lib
 
 
 
@@ -145,7 +157,7 @@ SHAREDLIB_LDFLAGS    = -dynamiclib -install_name @rpath/$(notdir $(PRODUCT)) -is
 ## OUTPUT INFO
 ###########################################################################
 
-PRODUCT = ./sim_rocket.a
+PRODUCT = ./sim_rocket.lib
 PRODUCT_TYPE = "static-library"
 BUILD_TYPE = "Static Library"
 
@@ -153,7 +165,7 @@ BUILD_TYPE = "Static Library"
 ## INCLUDE PATHS
 ###########################################################################
 
-INCLUDES_BUILDINFO = -I$(START_DIR) -I/Users/nitinongole/Documents/Stanford/Fall\ 2021/AA\ 228/Final\ Project/1D\ MPC\ +\ Policy\ Search -I$(MATLAB_ROOT)/extern/include
+INCLUDES_BUILDINFO = 
 
 INCLUDES = $(INCLUDES_BUILDINFO)
 
@@ -161,16 +173,17 @@ INCLUDES = $(INCLUDES_BUILDINFO)
 ## DEFINES
 ###########################################################################
 
+DEFINES_ = -D__USE_MINGW_ANSI_STDIO=1
 DEFINES_CUSTOM = 
 DEFINES_STANDARD = -DMODEL=sim_rocket
 
-DEFINES = $(DEFINES_CUSTOM) $(DEFINES_STANDARD)
+DEFINES = $(DEFINES_) $(DEFINES_CUSTOM) $(DEFINES_STANDARD)
 
 ###########################################################################
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = $(START_DIR)/sim_rocket_data.c $(START_DIR)/rt_nonfinite.c $(START_DIR)/rtGetNaN.c $(START_DIR)/rtGetInf.c $(START_DIR)/sim_rocket_initialize.c $(START_DIR)/sim_rocket_terminate.c $(START_DIR)/sim_rocket.c
+SRCS = $(START_DIR)/codegen/lib/sim_rocket/sim_rocket_data.c $(START_DIR)/codegen/lib/sim_rocket/rt_nonfinite.c $(START_DIR)/codegen/lib/sim_rocket/rtGetNaN.c $(START_DIR)/codegen/lib/sim_rocket/rtGetInf.c $(START_DIR)/codegen/lib/sim_rocket/sim_rocket_initialize.c $(START_DIR)/codegen/lib/sim_rocket/sim_rocket_terminate.c $(START_DIR)/codegen/lib/sim_rocket/sim_rocket.c
 
 ALL_SRCS = $(SRCS)
 
@@ -178,7 +191,7 @@ ALL_SRCS = $(SRCS)
 ## OBJECTS
 ###########################################################################
 
-OBJS = sim_rocket_data.o rt_nonfinite.o rtGetNaN.o rtGetInf.o sim_rocket_initialize.o sim_rocket_terminate.o sim_rocket.o
+OBJS = sim_rocket_data.obj rt_nonfinite.obj rtGetNaN.obj rtGetInf.obj sim_rocket_initialize.obj sim_rocket_terminate.obj sim_rocket.obj
 
 ALL_OBJS = $(OBJS)
 
@@ -198,7 +211,7 @@ LIBS =
 ## SYSTEM LIBRARIES
 ###########################################################################
 
-SYSTEM_LIBS =  -lm
+SYSTEM_LIBS = 
 
 ###########################################################################
 ## ADDITIONAL TOOLCHAIN FLAGS
@@ -208,7 +221,7 @@ SYSTEM_LIBS =  -lm
 # C Compiler
 #---------------
 
-CFLAGS_BASIC = $(DEFINES) $(INCLUDES)
+CFLAGS_BASIC = $(DEFINES) $(INCLUDES) @$(COMPILER_COMMAND_FILE)
 
 CFLAGS += $(CFLAGS_BASIC)
 
@@ -216,13 +229,33 @@ CFLAGS += $(CFLAGS_BASIC)
 # C++ Compiler
 #-----------------
 
-CPPFLAGS_BASIC = $(DEFINES) $(INCLUDES)
+CPPFLAGS_BASIC = $(DEFINES) $(INCLUDES) @$(COMPILER_COMMAND_FILE)
 
 CPPFLAGS += $(CPPFLAGS_BASIC)
+
+#---------------------
+# MEX C++ Compiler
+#---------------------
+
+MEX_CPP_Compiler_BASIC =  @$(COMPILER_COMMAND_FILE)
+
+MEX_CPPFLAGS += $(MEX_CPP_Compiler_BASIC)
+
+#-----------------
+# MEX Compiler
+#-----------------
+
+MEX_Compiler_BASIC =  @$(COMPILER_COMMAND_FILE)
+
+MEX_CFLAGS += $(MEX_Compiler_BASIC)
 
 ###########################################################################
 ## INLINED COMMANDS
 ###########################################################################
+
+
+MINGW_C_STANDARD_OPTS = $(C_STANDARD_OPTS)
+
 
 ###########################################################################
 ## PHONY TARGETS
@@ -257,7 +290,7 @@ execute : download
 
 $(PRODUCT) : $(OBJS) $(PREBUILT_OBJS)
 	@echo "### Creating static library "$(PRODUCT)" ..."
-	$(AR) $(ARFLAGS)  $(PRODUCT) $(OBJS)
+	$(AR) $(ARFLAGS)  $(PRODUCT) @$(CMD_FILE)
 	@echo "### Created: $(PRODUCT)"
 
 
@@ -269,63 +302,63 @@ $(PRODUCT) : $(OBJS) $(PREBUILT_OBJS)
 # SOURCE-TO-OBJECT
 #---------------------
 
-%.o : %.c
+%.obj : %.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-%.o : %.cpp
+%.obj : %.cpp
 	$(CPP) $(CPPFLAGS) -o "$@" "$<"
 
 
-%.o : $(RELATIVE_PATH_TO_ANCHOR)/%.c
+%.obj : $(RELATIVE_PATH_TO_ANCHOR)/%.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-%.o : $(RELATIVE_PATH_TO_ANCHOR)/%.cpp
+%.obj : $(RELATIVE_PATH_TO_ANCHOR)/%.cpp
 	$(CPP) $(CPPFLAGS) -o "$@" "$<"
 
 
-%.o : $(START_DIR)/%.c
+%.obj : $(START_DIR)/codegen/lib/sim_rocket/%.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-%.o : $(START_DIR)/%.cpp
+%.obj : $(START_DIR)/codegen/lib/sim_rocket/%.cpp
 	$(CPP) $(CPPFLAGS) -o "$@" "$<"
 
 
-%.o : /Users/nitinongole/Documents/Stanford/Fall\ 2021/AA\ 228/Final\ Project/1D\ MPC\ +\ Policy\ Search/%.c
+%.obj : $(START_DIR)/%.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-%.o : /Users/nitinongole/Documents/Stanford/Fall\ 2021/AA\ 228/Final\ Project/1D\ MPC\ +\ Policy\ Search/%.cpp
+%.obj : $(START_DIR)/%.cpp
 	$(CPP) $(CPPFLAGS) -o "$@" "$<"
 
 
-sim_rocket_data.o : $(START_DIR)/sim_rocket_data.c
+sim_rocket_data.obj : $(START_DIR)/codegen/lib/sim_rocket/sim_rocket_data.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-rt_nonfinite.o : $(START_DIR)/rt_nonfinite.c
+rt_nonfinite.obj : $(START_DIR)/codegen/lib/sim_rocket/rt_nonfinite.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-rtGetNaN.o : $(START_DIR)/rtGetNaN.c
+rtGetNaN.obj : $(START_DIR)/codegen/lib/sim_rocket/rtGetNaN.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-rtGetInf.o : $(START_DIR)/rtGetInf.c
+rtGetInf.obj : $(START_DIR)/codegen/lib/sim_rocket/rtGetInf.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-sim_rocket_initialize.o : $(START_DIR)/sim_rocket_initialize.c
+sim_rocket_initialize.obj : $(START_DIR)/codegen/lib/sim_rocket/sim_rocket_initialize.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-sim_rocket_terminate.o : $(START_DIR)/sim_rocket_terminate.c
+sim_rocket_terminate.obj : $(START_DIR)/codegen/lib/sim_rocket/sim_rocket_terminate.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-sim_rocket.o : $(START_DIR)/sim_rocket.c
+sim_rocket.obj : $(START_DIR)/codegen/lib/sim_rocket/sim_rocket.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
@@ -333,7 +366,7 @@ sim_rocket.o : $(START_DIR)/sim_rocket.c
 ## DEPENDENCIES
 ###########################################################################
 
-$(ALL_OBJS) : rtw_proj.tmw $(MAKEFILE)
+$(ALL_OBJS) : rtw_proj.tmw $(COMPILER_COMMAND_FILE) $(MAKEFILE)
 
 
 ###########################################################################
@@ -370,8 +403,8 @@ info :
 
 clean : 
 	$(ECHO) "### Deleting all derived files..."
-	$(RM) $(PRODUCT)
-	$(RM) $(ALL_OBJS)
+	$(RM) $(subst /,\,$(PRODUCT))
+	$(RM) $(subst /,\,$(ALL_OBJS))
 	$(ECHO) "### Deleted all derived files."
 
 

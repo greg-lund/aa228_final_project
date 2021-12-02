@@ -16,19 +16,17 @@
 #include "rtwtypes.h"
 #include <stddef.h>
 #include <stdlib.h>
+
 #ifdef __cplusplus
-
 extern "C" {
-
 #endif
 
-  /* Function Declarations */
-  extern void sim_rocket_terminate(void);
+/* Function Declarations */
+extern void sim_rocket_terminate(void);
 
 #ifdef __cplusplus
-
 }
 #endif
-#endif
 
+#endif
 /* End of code generation (sim_rocket_terminate.h) */

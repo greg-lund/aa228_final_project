@@ -33,6 +33,7 @@
 /* otherwise use them as required by your application.                   */
 /*                                                                       */
 /*************************************************************************/
+
 #ifndef MAIN_H
 #define MAIN_H
 
@@ -40,19 +41,17 @@
 #include "rtwtypes.h"
 #include <stddef.h>
 #include <stdlib.h>
+
 #ifdef __cplusplus
-
 extern "C" {
-
 #endif
 
-  /* Function Declarations */
-  extern int main(int argc, const char * const argv[]);
+/* Function Declarations */
+extern int main(int argc, char **argv);
 
 #ifdef __cplusplus
-
 }
 #endif
-#endif
 
+#endif
 /* End of code generation (main.h) */

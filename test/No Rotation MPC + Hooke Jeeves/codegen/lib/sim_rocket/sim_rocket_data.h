@@ -16,6 +16,6 @@
 #include "rtwtypes.h"
 #include <stddef.h>
 #include <stdlib.h>
-#endif
 
+#endif
 /* End of code generation (sim_rocket_data.h) */

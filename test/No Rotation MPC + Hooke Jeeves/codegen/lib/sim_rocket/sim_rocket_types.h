@@ -14,6 +14,6 @@
 
 /* Include files */
 #include "rtwtypes.h"
-#endif
 
+#endif
 /* End of code generation (sim_rocket_types.h) */
