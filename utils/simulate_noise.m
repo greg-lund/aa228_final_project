@@ -1,4 +1,4 @@
-function [x,u,m,t] = simulate_noise(w,g,x0,m0,mf,alpha,theta_max,Tmax,K,dt,mu,sigma,num_steps)
+function [x,u,m,t] = simulate_noise(w,g,x0,m0,mf,alpha,theta_max,Tmax,K,dt,num_steps)
 %simulate_feedback Simulates the rocket trajectory given feedback gain
 %   matrix K
 %
@@ -30,7 +30,9 @@ for i=1:num_steps
         control = clamp_input(g,theta_max,Tmax,m(end),-K*x(:,end));
     end
     Tc = m(end)*(control-g);
-    new_x = x(:,end)+(A*x(:,end)+B*control)*dt + mvnrnd(mu,sigma)';
+    Tc = Tc + mvnrnd([0,0,0],1/20*diag(abs(Tc)))';
+    control = Tc ./ m(end) + g;
+    new_x = x(:,end)+(A*x(:,end)+B*control)*dt;
     x = [x,new_x];
     m = [m,m(end)-alpha*norm(Tc)*dt];
     t = [t,t(end)+dt];
